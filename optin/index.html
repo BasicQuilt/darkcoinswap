@@ -352,17 +352,14 @@
       const algodClient     = new algosdk.Algodv2('', ALGOD_URL, 443);
       const suggestedParams = await algodClient.getTransactionParams().do();
 
-      // Opt-in = 0-amount self-transfer
-      const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
-        userAddress,   // from
-        userAddress,   // to (self)
-        undefined,     // closeRemainderTo
-        undefined,     // revocationTarget
-        0,             // amount = 0
-        undefined,     // note
-        assetId,       // asset to opt into
-        suggestedParams
-      );
+      // Opt-in = 0-amount self-transfer (object form matches swap page pattern)
+      const txn = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+        from:            userAddress,
+        to:              userAddress,
+        amount:          0,
+        assetIndex:      assetId,
+        suggestedParams: suggestedParams,
+      });
 
       const txnGroup   = [{ txn: txn, signers: [userAddress] }];
       setStep('step-sign', 'active');
@@ -371,7 +368,9 @@
 
       signBtn.textContent = '⏳ Submitting…';
 
-      const { txId } = await algodClient.sendRawTransaction(signedTxns).do();
+      // signTransaction returns Uint8Array[] — unwrap the first element
+      const rawTxn       = Array.isArray(signedTxns) ? signedTxns[0] : signedTxns;
+      const { txId }     = await algodClient.sendRawTransaction(rawTxn).do();
       await algosdk.waitForConfirmation(algodClient, txId, 6);
 
       setStep('step-sign', 'done');
