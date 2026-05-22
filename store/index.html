@@ -9,12 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
 
   <script>var global = window;</script>
-
-  <!-- Your bundled wallet file -->
   <script src="vendor/vendor-bundle.js"></script>
-
-  <!-- AlgoSDK -->
-  <script src="https://cdn.jsdelivr.net/npm/algosdk/dist/browser/algosdk.min.js"></script>
 
   <style>
     :root {
@@ -26,35 +21,22 @@
       --stone:    #1a1410;
       --slate:    #221a14;
       --shadow:   #0d0a07;
-      --mist:     rgba(212, 169, 66, 0.08);
       --success:  #2d6a2d;
-      --warn:     #7a4a00;
     }
 
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       background-color: var(--shadow);
       background-image:
-        radial-gradient(
-          ellipse 80% 60% at 50% 0%,
-          rgba(139,0,0,0.18) 0%,
-          transparent 70%
-        ),
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(139,0,0,0.18) 0%, transparent 70%),
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='80' height='80' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-
       font-family: 'Crimson Text', Georgia, serif;
       color: var(--parchment);
-
       padding: 24px 16px;
     }
 
@@ -64,36 +46,19 @@
       max-width: 460px;
     }
 
-    .frame::before,
-    .frame::after {
+    .frame::before, .frame::after {
       content: '';
       position: absolute;
-      width: 40px;
-      height: 40px;
+      width: 40px; height: 40px;
       border-color: var(--gold-dim);
       border-style: solid;
       opacity: 0.6;
     }
-
-    .frame::before {
-      top: -4px;
-      left: -4px;
-      border-width: 2px 0 0 2px;
-    }
-
-    .frame::after {
-      bottom: -4px;
-      right: -4px;
-      border-width: 0 2px 2px 0;
-    }
+    .frame::before { top: -4px; left: -4px; border-width: 2px 0 0 2px; }
+    .frame::after  { bottom: -4px; right: -4px; border-width: 0 2px 2px 0; }
 
     .card {
-      background: linear-gradient(
-        160deg,
-        var(--slate) 0%,
-        var(--stone) 100%
-      );
-
+      background: linear-gradient(160deg, var(--slate) 0%, var(--stone) 100%);
       border: 1px solid rgba(212,169,66,0.25);
       border-radius: 4px;
       padding: 36px 32px;
@@ -105,41 +70,23 @@
       content: '';
       position: absolute;
       inset: 0;
-
-      background:
-        radial-gradient(
-          ellipse 70% 40% at 50% 0%,
-          rgba(192,57,43,0.10) 0%,
-          transparent 70%
-        );
-
+      background: radial-gradient(ellipse 70% 40% at 50% 0%, rgba(192,57,43,0.10) 0%, transparent 70%);
       pointer-events: none;
     }
 
-    .header {
-      text-align: center;
-      margin-bottom: 28px;
-    }
+    .header { text-align: center; margin-bottom: 28px; }
 
     .sigil {
       font-size: 2.4rem;
       line-height: 1;
       display: block;
       margin-bottom: 10px;
-
-      filter: drop-shadow(0 0 12px rgba(192,57,43,0.6));
-
       animation: breathe 4s ease-in-out infinite;
     }
 
     @keyframes breathe {
-      0%, 100% {
-        filter: drop-shadow(0 0 10px rgba(192,57,43,0.5));
-      }
-
-      50% {
-        filter: drop-shadow(0 0 20px rgba(212,169,66,0.7));
-      }
+      0%, 100% { filter: drop-shadow(0 0 10px rgba(192,57,43,0.5)); }
+      50%       { filter: drop-shadow(0 0 20px rgba(212,169,66,0.7)); }
     }
 
     h1 {
@@ -165,66 +112,27 @@
       margin: 20px 0;
       opacity: 0.4;
     }
-
-    .divider::before,
-    .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background:
-        linear-gradient(
-          to right,
-          transparent,
-          var(--gold-dim)
-        );
+    .divider::before, .divider::after {
+      content: ''; flex: 1; height: 1px;
     }
+    .divider::before { background: linear-gradient(to right, transparent, var(--gold-dim)); }
+    .divider::after  { background: linear-gradient(to left,  transparent, var(--gold-dim)); }
+    .divider span { font-family: 'Cinzel', serif; font-size: 0.7rem; color: var(--gold-dim); letter-spacing: 0.2em; }
 
-    .divider::after {
-      background:
-        linear-gradient(
-          to left,
-          transparent,
-          var(--gold-dim)
-        );
-    }
-
-    .divider span {
-      font-family: 'Cinzel', serif;
-      font-size: 0.7rem;
-      color: var(--gold-dim);
-      letter-spacing: 0.2em;
-    }
-
-    #loading {
-      text-align: center;
-      padding: 32px 0;
-    }
-
+    /* Loading */
+    #loading { text-align: center; padding: 32px 0; }
     .spinner {
-      width: 36px;
-      height: 36px;
-
+      width: 36px; height: 36px;
       border: 3px solid rgba(212,169,66,0.15);
       border-top-color: var(--gold-dim);
       border-radius: 50%;
-
       animation: spin 1s linear infinite;
-
       margin: 0 auto 14px;
     }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { color: rgba(232,216,176,0.45); font-style: italic; font-size: 1rem; }
 
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    .loading-text {
-      color: rgba(232,216,176,0.45);
-      font-style: italic;
-      font-size: 1rem;
-    }
-
+    /* Item card */
     .item-card {
       background: rgba(0,0,0,0.3);
       border: 1px solid rgba(212,169,66,0.2);
@@ -233,34 +141,12 @@
       margin-bottom: 24px;
       text-align: center;
     }
+    .item-emoji { font-size: 2rem; display: block; margin-bottom: 8px; }
+    .item-name  { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--gold); margin-bottom: 6px; }
+    .item-desc  { color: rgba(232,216,176,0.6); font-size: 0.95rem; line-height: 1.5; margin-bottom: 14px; }
+    .item-price { font-family: 'Cinzel', serif; font-size: 1.15rem; color: #7cfc00; font-weight: 600; }
 
-    .item-emoji {
-      font-size: 2rem;
-      display: block;
-      margin-bottom: 8px;
-    }
-
-    .item-name {
-      font-family: 'Cinzel', serif;
-      font-size: 1.1rem;
-      color: var(--gold);
-      margin-bottom: 6px;
-    }
-
-    .item-desc {
-      color: rgba(232,216,176,0.6);
-      font-size: 0.95rem;
-      line-height: 1.5;
-      margin-bottom: 14px;
-    }
-
-    .item-price {
-      font-family: 'Cinzel', serif;
-      font-size: 1.15rem;
-      color: #7cfc00;
-      font-weight: 600;
-    }
-
+    /* Step label */
     .step-label {
       font-family: 'Cinzel', serif;
       font-size: 0.7rem;
@@ -271,6 +157,7 @@
       text-align: center;
     }
 
+    /* Wallet address display */
     .wallet-addr {
       text-align: center;
       font-size: 0.75rem;
@@ -279,107 +166,58 @@
       margin: 10px 0 6px;
       font-style: italic;
     }
+    .wallet-addr.connected { color: rgba(124,252,0,0.6); }
 
-    .wallet-addr.connected {
-      color: rgba(124,252,0,0.6);
-    }
-
-    .wallet-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
+    /* Wallet buttons */
+    .wallet-row { display: flex; gap: 10px; margin-bottom: 10px; }
     .wallet-btn {
       flex: 1;
       padding: 13px 12px;
       border-radius: 3px;
       border: 1px solid rgba(212,169,66,0.2);
-
       background: rgba(0,0,0,0.35);
       color: var(--parchment);
-
       font-family: 'Cinzel', serif;
       font-size: 0.85rem;
       font-weight: 600;
       letter-spacing: 0.04em;
-
       cursor: pointer;
       transition: all 0.2s ease;
     }
+    .wallet-btn:hover  { border-color: var(--gold); }
+    .wallet-btn.active { border-color: #7cfc00; color: #b7ff9d; background: rgba(124,252,0,0.08); }
 
-    .wallet-btn:hover {
-      border-color: var(--gold);
-    }
-
-    .wallet-btn.active {
-      border-color: #7cfc00;
-      color: #b7ff9d;
-      background: rgba(124,252,0,0.08);
-    }
-
+    /* Pay button */
     .btn {
       display: block;
       width: 100%;
       padding: 13px 20px;
-
       border: none;
       border-radius: 3px;
-
       font-family: 'Cinzel', serif;
       font-size: 0.9rem;
       font-weight: 600;
       letter-spacing: 0.06em;
-
       cursor: pointer;
-
       transition: all 0.2s ease;
-
       position: relative;
       overflow: hidden;
-
       margin-bottom: 10px;
     }
-
-    .btn::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(255,255,255,0.08);
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .btn:hover:not(:disabled)::after {
-      opacity: 1;
-    }
-
-    .btn:active:not(:disabled) {
-      transform: translateY(1px);
-    }
-
-    .btn:disabled {
-      opacity: 0.35;
-      cursor: not-allowed;
-    }
+    .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .btn:active:not(:disabled) { transform: translateY(1px); }
 
     .btn-pay {
-      background:
-        linear-gradient(
-          135deg,
-          #3a1500,
-          #5a1a00
-        );
-
+      background: linear-gradient(135deg, #3a1500, #5a1a00);
       border: 1px solid rgba(212,169,66,0.5);
       color: var(--gold);
     }
-
     .btn-pay:hover:not(:disabled) {
       border-color: var(--gold);
       box-shadow: 0 0 16px rgba(212,169,66,0.25);
     }
 
+    /* Status box */
     .status {
       border-radius: 3px;
       padding: 14px 16px;
@@ -389,62 +227,16 @@
       border: 1px solid transparent;
       display: none;
     }
+    .status.show { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
-    .status.show {
-      display: block;
-      animation: fadeIn 0.3s ease;
-    }
+    .status-info    { background: rgba(30,60,100,0.4);  border-color: rgba(60,120,200,0.3);  color: #a8c8ff; }
+    .status-success { background: rgba(20,70,20,0.5);   border-color: rgba(80,160,80,0.4);   color: #a8ffa8; }
+    .status-error   { background: rgba(100,10,10,0.5);  border-color: rgba(180,40,40,0.4);   color: #ffb0b0; }
+    .status-warn    { background: rgba(100,60,0,0.4);   border-color: rgba(180,120,0,0.3);   color: #ffd88a; }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(4px);
-      }
-
-      to {
-        opacity: 1;
-        transform: none;
-      }
-    }
-
-    .status-info {
-      background: rgba(30,60,100,0.4);
-      border-color: rgba(60,120,200,0.3);
-      color: #a8c8ff;
-    }
-
-    .status-success {
-      background: rgba(20,70,20,0.5);
-      border-color: rgba(80,160,80,0.4);
-      color: #a8ffa8;
-    }
-
-    .status-error {
-      background: rgba(100,10,10,0.5);
-      border-color: rgba(180,40,40,0.4);
-      color: #ffb0b0;
-    }
-
-    .status-warn {
-      background: rgba(100,60,0,0.4);
-      border-color: rgba(180,120,0,0.3);
-      color: #ffd88a;
-    }
-
-    .status a {
-      color: inherit;
-      text-decoration: underline;
-      text-decoration-style: dotted;
-    }
-
-    .status code {
-      font-family: monospace;
-      font-size: 0.82rem;
-      background: rgba(0,0,0,0.3);
-      padding: 1px 4px;
-      border-radius: 2px;
-      word-break: break-all;
-    }
+    .status a    { color: inherit; text-decoration: underline; text-decoration-style: dotted; }
+    .status code { font-family: monospace; font-size: 0.82rem; background: rgba(0,0,0,0.3); padding: 1px 4px; border-radius: 2px; word-break: break-all; }
 
     .footer-note {
       text-align: center;
@@ -466,69 +258,39 @@
       <p class="subtitle">Champions who invest, conquer.</p>
     </div>
 
-    <div class="divider">
-      <span>✦</span>
-    </div>
+    <div class="divider"><span>✦</span></div>
 
-    <!-- Loading -->
     <div id="loading">
       <div class="spinner"></div>
-      <p class="loading-text">
-        Retrieving your purchase scroll…
-      </p>
+      <p class="loading-text">Retrieving your purchase scroll…</p>
     </div>
 
-    <!-- Main -->
     <div id="main" style="display:none;">
 
       <div class="item-card">
         <span class="item-emoji" id="itemEmoji">⚡</span>
-
-        <div class="item-name" id="itemName">—</div>
-
-        <div class="item-desc" id="itemDesc">—</div>
-
+        <div class="item-name"  id="itemName">—</div>
+        <div class="item-desc"  id="itemDesc">—</div>
         <div class="item-price" id="itemPrice">—</div>
       </div>
 
-      <p class="step-label" id="stepLabel">
-        Step 1 — Connect your wallet
-      </p>
+      <p class="step-label" id="stepLabel">Step 1 — Connect your wallet</p>
 
-      <!-- Wallet buttons -->
       <div class="wallet-row">
-        <button
-          class="wallet-btn"
-          id="btn-pera"
-          onclick="connectWallet('pera')"
-        >
-          🔵 Pera
-        </button>
-
-        <button
-          class="wallet-btn"
-          id="btn-defly"
-          onclick="connectWallet('defly')"
-        >
-          🟢 Defly
-        </button>
+        <button class="wallet-btn" id="btn-pera"  onclick="connectWallet('pera')">🔵 Pera</button>
+        <button class="wallet-btn" id="btn-defly" onclick="connectWallet('defly')">🟢 Defly</button>
       </div>
 
       <div class="wallet-addr" id="walletAddr"></div>
 
-      <button
-        id="btnPay"
-        class="btn btn-pay"
-        style="display:none;"
-      >
-        ⚔️ Confirm & Pay
+      <button id="btnPay" class="btn btn-pay" style="display:none;" onclick="sendPayment()">
+        ⚔️ Confirm &amp; Pay
       </button>
 
       <div id="status" class="status"></div>
 
       <p class="footer-note">
-        Link expires in 2 hours · Purchase ID:
-        <span id="pidLabel">—</span>
+        Link expires in 2 hours · Purchase ID: <span id="pidLabel">—</span>
       </p>
 
     </div>
@@ -536,30 +298,20 @@
 </div>
 
 <script>
-  // ── Wallet constructor resolver ─────────────────────────────────────
+  // ── Resolve wallet constructors (same pattern as deposit page) ──────
   function resolveConstructor(candidates) {
     for (var i = 0; i < candidates.length; i++) {
       var parts = candidates[i].split('.');
       var obj = window;
-
       for (var j = 0; j < parts.length; j++) {
-        if (obj == null) {
-          obj = null;
-          break;
-        }
-
+        if (obj == null) { obj = null; break; }
         obj = obj[parts[j]];
       }
-
-      if (typeof obj === 'function') {
-        return obj;
-      }
+      if (typeof obj === 'function') return obj;
     }
-
     return null;
   }
 
-  // ── Wallet constructors ─────────────────────────────────────────────
   var PeraWalletConnect = resolveConstructor([
     'peraWalletConnect.PeraWalletConnect',
     'PeraWalletConnect'
@@ -570,41 +322,32 @@
     'DeflyWalletConnect'
   ]);
 
-  // ── Globals ─────────────────────────────────────────────────────────
-  const algod = new algosdk.Algodv2(
-    '',
-    'https://mainnet-api.algonode.cloud',
-    443
-  );
+  // ── Constants ───────────────────────────────────────────────────────
+  const ALGOD_URL = 'https://mainnet-api.algonode.cloud';
 
-  let pData = null;
+  // ── State ───────────────────────────────────────────────────────────
+  var pData           = null;
+  var connectedAddress = null;
+  var activeWallet    = null;
+  var walletType      = null;
+  var walletConnected = false;
 
-  let connectedAddress = null;
-  let activeWallet     = null;
-  let walletType       = null;
+  // ── Wallet instances ────────────────────────────────────────────────
+  var peraWallet  = PeraWalletConnect  ? new PeraWalletConnect()  : null;
+  var deflyWallet = DeflyWalletConnect ? new DeflyWalletConnect() : null;
 
-  const peraWallet  = PeraWalletConnect
-    ? new PeraWalletConnect({ shouldShowSignTxnToast: true })
-    : null;
+  // ── DOM refs ────────────────────────────────────────────────────────
+  var loadingEl = document.getElementById('loading');
+  var mainEl    = document.getElementById('main');
+  var statusEl  = document.getElementById('status');
+  var stepEl    = document.getElementById('stepLabel');
+  var btnPay    = document.getElementById('btnPay');
+  var walletEl  = document.getElementById('walletAddr');
 
-  const deflyWallet = DeflyWalletConnect
-    ? new DeflyWalletConnect()
-    : null;
-
-  // ── Elements ────────────────────────────────────────────────────────
-  const loadingEl  = document.getElementById('loading');
-  const mainEl     = document.getElementById('main');
-  const statusEl   = document.getElementById('status');
-  const stepEl     = document.getElementById('stepLabel');
-  const btnPay     = document.getElementById('btnPay');
-  const walletEl   = document.getElementById('walletAddr');
-
-  // ── Helpers ─────────────────────────────────────────────────────────
+  // ── Status helpers ──────────────────────────────────────────────────
   function showStatus(html, type) {
-    type = type || 'info';
-
-    statusEl.innerHTML = html;
-    statusEl.className = 'status show status-' + type;
+    statusEl.innerHTML  = html;
+    statusEl.className  = 'status show status-' + (type || 'info');
   }
 
   function clearStatus() {
@@ -612,282 +355,191 @@
   }
 
   function loadError(msg) {
-    loadingEl.innerHTML =
-      '<p style="color:#ffb0b0;text-align:center;">❌ ' +
-      msg +
-      '</p>';
+    loadingEl.innerHTML = '<p style="color:#ffb0b0;text-align:center;">❌ ' + msg + '</p>';
   }
 
-  function setConnected(address) {
+  // ── After wallet connects ───────────────────────────────────────────
+  function onWalletConnected(address) {
     connectedAddress = address;
+    walletConnected  = true;
 
-    walletEl.className = 'wallet-addr connected';
+    walletEl.className   = 'wallet-addr connected';
     walletEl.textContent = '✅ ' + address;
 
     btnPay.style.display = 'block';
 
-    stepEl.textContent =
-      'Step 2 — Review and approve the payment';
-
-    if (
-      address.toLowerCase() !==
-      pData.userAddress.toLowerCase()
-    ) {
+    // Wrong wallet check
+    if (address.toLowerCase() !== pData.userAddress.toLowerCase()) {
       showStatus(
         '⚠️ <strong>Wrong wallet connected.</strong><br>' +
-        'Expected:<br>' +
-        '<code>' + pData.userAddress + '</code>',
+        'Expected:<br><code>' + pData.userAddress + '</code>',
         'warn'
       );
-
       btnPay.disabled = true;
       return;
     }
 
-    btnPay.disabled = false;
+    btnPay.disabled  = false;
+    stepEl.textContent = 'Step 2 — Review and approve the payment';
     clearStatus();
   }
 
-  // ── Load purchase ───────────────────────────────────────────────────
+  // ── Load purchase data from gist raw URL ────────────────────────────
   async function loadPurchase() {
-    const params = new URLSearchParams(window.location.search);
+    var params     = new URLSearchParams(window.location.search);
+    var rawUrl     = params.get('raw');
+    var purchaseId = params.get('pid');
 
-    const rawUrl     = params.get('raw');
-    const purchaseId = params.get('pid');
-
-    document.getElementById('pidLabel').textContent =
-      purchaseId || '—';
+    document.getElementById('pidLabel').textContent = purchaseId || '—';
 
     if (!rawUrl || !purchaseId) {
-      loadError(
-        'Invalid store link. Return to Discord and start a new purchase.'
-      );
+      loadError('Invalid store link. Return to Discord and start a new purchase.');
       return;
     }
 
     try {
-      const res = await fetch(
-        decodeURIComponent(rawUrl),
-        { cache: 'no-store' }
-      );
-
-      if (!res.ok) {
-        throw new Error('HTTP ' + res.status);
-      }
-
+      var res = await fetch(decodeURIComponent(rawUrl), { cache: 'no-store' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
       pData = await res.json();
-
     } catch (err) {
-      loadError(
-        'Could not load purchase data. The link may have expired or already been used.'
-      );
+      loadError('Could not load purchase data. The link may have expired or already been used.');
       return;
     }
 
     if (pData.purchaseId !== purchaseId) {
-      loadError(
-        'Purchase ID mismatch. Please start a new purchase from Discord.'
-      );
+      loadError('Purchase ID mismatch. Please start a new purchase from Discord.');
       return;
     }
 
-    // Render item
-    document.getElementById('itemEmoji').textContent =
-      pData.itemEmoji || '⚡';
-
-    document.getElementById('itemName').textContent =
-      pData.itemName || 'Item';
-
-    document.getElementById('itemDesc').textContent =
-      pData.itemDesc || '';
-
-    document.getElementById('itemPrice').textContent =
-      pData.displayPrice || '—';
+    // Render item details
+    document.getElementById('itemEmoji').textContent = pData.itemEmoji  || '⚡';
+    document.getElementById('itemName').textContent  = pData.itemName   || 'Item';
+    document.getElementById('itemDesc').textContent  = pData.itemDesc   || '';
+    document.getElementById('itemPrice').textContent = pData.displayPrice || '—';
 
     loadingEl.style.display = 'none';
     mainEl.style.display    = 'block';
 
-    // Silent reconnect Pera
-    try {
-      if (peraWallet) {
-        const accounts = await peraWallet.reconnectSession();
-
-        if (
-          accounts.length &&
-          accounts[0].toLowerCase() ===
-          pData.userAddress.toLowerCase()
-        ) {
-          walletType = 'pera';
-          activeWallet = peraWallet;
-
-          document
-            .getElementById('btn-pera')
-            .classList.add('active');
-
-          setConnected(accounts[0]);
-        }
-      }
-    } catch (e) {}
+    // Silent Pera reconnect
+    if (peraWallet) {
+      peraWallet.reconnectSession()
+        .then(function(accounts) {
+          if (
+            accounts.length &&
+            accounts[0].toLowerCase() === pData.userAddress.toLowerCase()
+          ) {
+            walletType   = 'pera';
+            activeWallet = peraWallet;
+            document.getElementById('btn-pera').classList.add('active');
+            onWalletConnected(accounts[0]);
+          }
+        })
+        .catch(function() {});
+    }
   }
 
   // ── Connect wallet ──────────────────────────────────────────────────
   async function connectWallet(type) {
     if (!peraWallet || !deflyWallet) {
-      showStatus(
-        '⚠️ Wallet scripts failed to load. Hard refresh and try again.',
-        'error'
-      );
-
+      showStatus('⚠️ Wallet scripts failed to load. Hard refresh and try again.', 'error');
       return;
     }
 
     try {
       if (activeWallet && walletType !== type) {
-        await activeWallet.disconnect().catch(function(){});
+        await activeWallet.disconnect().catch(function() {});
       }
 
-      walletType = type;
+      walletType   = type;
+      activeWallet = type === 'pera' ? peraWallet : deflyWallet;
 
-      activeWallet =
-        type === 'pera'
-          ? peraWallet
-          : deflyWallet;
+      showStatus('Opening ' + (type === 'pera' ? 'Pera' : 'Defly') + ' Wallet…', 'info');
 
-      showStatus(
-        'Opening ' +
-        (type === 'pera' ? 'Pera' : 'Defly') +
-        ' Wallet…',
-        'info'
-      );
+      var accounts = await activeWallet.connect();
+      var address  = accounts[0];
 
-      const accounts = await activeWallet.connect();
+      document.getElementById('btn-pera').classList.remove('active');
+      document.getElementById('btn-defly').classList.remove('active');
+      document.getElementById('btn-' + type).classList.add('active');
 
-      const address = accounts[0];
-
-      document
-        .getElementById('btn-pera')
-        .classList.remove('active');
-
-      document
-        .getElementById('btn-defly')
-        .classList.remove('active');
-
-      document
-        .getElementById('btn-' + type)
-        .classList.add('active');
-
-      setConnected(address);
+      onWalletConnected(address);
 
     } catch (err) {
-      const msg = err.message || '';
-
-      if (
-        !msg.toLowerCase().includes('cancel') &&
-        !msg.toLowerCase().includes('closed')
-      ) {
-        showStatus(
-          'Connection failed: ' + msg,
-          'error'
-        );
+      var msg = (err.message || '').toLowerCase();
+      if (!msg.includes('cancel') && !msg.includes('closed')) {
+        showStatus('Connection failed: ' + err.message, 'error');
       }
     }
   }
 
-  // ── Send payment ────────────────────────────────────────────────────
-  btnPay.addEventListener('click', async function() {
+  // ── Send payment (mirrors deposit page pattern exactly) ─────────────
+  async function sendPayment() {
+    if (!connectedAddress || !activeWallet || !pData) return;
 
-    if (!connectedAddress || !activeWallet) {
-      return;
-    }
-
-    btnPay.disabled = true;
-
-    showStatus(
-      '⚙️ Building your transaction…',
-      'info'
-    );
+    btnPay.disabled    = true;
+    btnPay.textContent = '⏳ Building transaction…';
+    showStatus('⚙️ Building your transaction…', 'info');
 
     try {
-      const sp = await algod.getTransactionParams().do();
+      // ① Get suggested params — same as deposit page
+      var algodClient     = new algosdk.Algodv2('', ALGOD_URL, 443);
+      var suggestedParams = await algodClient.getTransactionParams().do();
 
-      const enc = new TextEncoder();
+      // ② Build payment transaction
+      var noteBytes = new TextEncoder().encode(pData.note);
 
-      const txn =
-        algosdk.makePaymentTxnWithSuggestedParamsFromObject({
-          from: connectedAddress,
-          to: pData.receiverAddress,
-          amount: pData.amountMicroAlgo,
-          note: enc.encode(pData.note),
-          suggestedParams: sp
-        });
-
-      showStatus(
-        '📱 Approve the transaction in your wallet…',
-        'info'
+      var txn = algosdk.makePaymentTxnWithSuggestedParams(
+        connectedAddress,       // from
+        pData.receiverAddress,  // to
+        pData.amountMicroAlgo,  // amount (microAlgo — already set correctly by bot)
+        undefined,              // closeRemainderTo
+        noteBytes,              // note
+        suggestedParams
       );
 
-      const txnGroup = [{
-        txn: txn,
-        signers: [connectedAddress]
-      }];
+      // ③ Sign
+      btnPay.textContent = '📱 Approve in wallet…';
+      showStatus('📱 Approve the transaction in your wallet…', 'info');
 
-      const signedTxns =
-        await activeWallet.signTransaction([txnGroup]);
+      var txnGroup   = [{ txn: txn, signers: [connectedAddress] }];
+      var signedTxns = await activeWallet.signTransaction([txnGroup]);
 
-      showStatus(
-        '⏳ Submitting to Algorand…',
-        'info'
-      );
+      // ④ Submit + confirm — same destructuring as deposit page
+      btnPay.textContent = '⏳ Submitting…';
+      showStatus('⏳ Submitting to Algorand…', 'info');
 
-      const sendResult =
-        await algod.sendRawTransaction(signedTxns).do();
+      var { txId } = await algodClient.sendRawTransaction(signedTxns).do();
+      await algosdk.waitForConfirmation(algodClient, txId, 8);
 
-      const txId = sendResult.txId;
+      // ⑤ Success
+      btnPay.textContent = '✅ Payment Sent';
+      btnPay.disabled    = false;
+      btnPay.onclick     = null;
 
-      await algosdk.waitForConfirmation(
-        algod,
-        txId,
-        8
-      );
+      stepEl.textContent = 'Step 3 — Return to Discord and tap "✅ I\'ve Paid"';
 
       showStatus(
         '<strong>✅ Payment confirmed on-chain!</strong><br><br>' +
         'Return to Discord and click <strong>"✅ I\'ve Paid"</strong> to receive your item.<br><br>' +
-        '<a href="https://allo.info/tx/' + txId + '" target="_blank">' +
-        'View transaction on Allo ↗' +
-        '</a>',
+        '<a href="https://allo.info/tx/' + txId + '" target="_blank">View on Allo ↗</a>',
         'success'
       );
 
-      btnPay.textContent = '✅ Payment Sent';
-
-      stepEl.textContent =
-        'Step 3 — Return to Discord and tap "✅ I\'ve Paid"';
-
     } catch (err) {
+      var msg = err.message || 'Unknown error';
 
-      const msg = err.message || 'Unknown error';
+      btnPay.disabled    = false;
+      btnPay.textContent = '⚔️ Confirm & Pay';
 
-      if (
-        msg.toLowerCase().includes('cancel') ||
-        msg.toLowerCase().includes('reject')
-      ) {
-        showStatus(
-          'Transaction cancelled. You can try again when ready.',
-          'warn'
-        );
+      if (msg.toLowerCase().includes('cancel') || msg.toLowerCase().includes('reject')) {
+        showStatus('Transaction cancelled. You can try again when ready.', 'warn');
       } else {
-        showStatus(
-          '❌ Transaction failed: ' + msg,
-          'error'
-        );
+        showStatus('❌ Transaction failed: ' + msg, 'error');
       }
-
-      btnPay.disabled = false;
     }
-  });
+  }
 
-  // ── Init ────────────────────────────────────────────────────────────
+  // ── Boot ────────────────────────────────────────────────────────────
   loadPurchase();
 </script>
 
