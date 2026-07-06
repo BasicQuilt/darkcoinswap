@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dark Coin → GOLD Swap</title>
+  <title>Algorand → GOLD Swap</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
   <script>var global = window;</script>
@@ -114,7 +114,7 @@
 
   <div class="header">
     <div class="logo-ring">🔄</div>
-    <h1>Dark Coin → GOLD Swap</h1>
+    <h1>Algorand → GOLD Swap</h1>
     <p>Connect your wallet to complete your swap</p>
   </div>
 
@@ -127,7 +127,7 @@
       <div class="swap-side">
         <div class="swap-label">You Send</div>
         <div class="swap-amount" id="send-amount">—</div>
-        <div class="swap-coin">DARK COIN</div>
+        <div class="swap-coin">ALGO</div>
       </div>
       <div class="swap-arrow">→</div>
       <div class="swap-side">
@@ -146,7 +146,7 @@
         </div>
         <div class="detail-row">
           <span class="label">Asset</span>
-          <span class="value">Dark Coin (ASA 1088771340)</span>
+          <span class="value">Algorand (ALGO)</span>
         </div>
         <div class="detail-row">
           <span class="label">Amount</span>
@@ -285,10 +285,10 @@
       userAddress = swapData.userAddress;
 
       // Populate UI
-      document.getElementById('send-amount').textContent    = swapData.displayDark.replace(' DARK', '');
+      document.getElementById('send-amount').textContent    = swapData.displayAlgo.replace(' ALGO', '');
       document.getElementById('receive-amount').textContent = swapData.displayGold.replace(' GOLD', '');
       document.getElementById('detail-swapid').textContent  = swapData.swapId;
-      document.getElementById('detail-amount').textContent  = swapData.displayDark;
+      document.getElementById('detail-amount').textContent  = swapData.displayAlgo;
       document.getElementById('detail-note').textContent    = swapData.note;
       document.getElementById('addr-display').textContent   = userAddress;
 
@@ -305,7 +305,7 @@
               document.getElementById('btn-pera').classList.add('active');
               var signBtn       = document.getElementById('sign-btn');
               signBtn.disabled  = false;
-              signBtn.textContent = 'Send ' + swapData.displayDark + ' in Pera';
+              signBtn.textContent = 'Send ' + swapData.displayAlgo + ' in Pera';
               setStep('step-connect', 'done');
               setStep('step-sign',    'active');
             }
@@ -352,7 +352,7 @@
 
       var signBtn        = document.getElementById('sign-btn');
       signBtn.disabled   = false;
-      signBtn.textContent = 'Send ' + swapData.displayDark + ' in ' + (type === 'pera' ? 'Pera' : 'Defly');
+      signBtn.textContent = 'Send ' + swapData.displayAlgo + ' in ' + (type === 'pera' ? 'Pera' : 'Defly');
 
       setStep('step-connect', 'done');
       setStep('step-sign',    'active');
@@ -376,17 +376,15 @@
       const algodClient     = new algosdk.Algodv2('', ALGOD_URL, 443);
       const suggestedParams = await algodClient.getTransactionParams().do();
       const noteBytes       = encodeNote(swapData.note);
-      const amountRaw       = parseInt(swapData.amountRaw, 10);
+      const amountRaw       = parseInt(swapData.amountRaw, 10); // microAlgos
 
-      // Dark Coin is always an ASA transfer
-      const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
+      // Native ALGO transfer is a payment transaction — no asset ID involved
+      const txn = algosdk.makePaymentTxnWithSuggestedParams(
         userAddress,               // from
         swapData.receiverAddress,  // to
+        amountRaw,                 // amount in microAlgos
         undefined,                 // closeRemainderTo
-        undefined,                 // revocationTarget
-        amountRaw,                 // amount in Dark Coin base units
         noteBytes,                 // note
-        swapData.assetId,          // Dark Coin asset ID
         suggestedParams
       );
 
@@ -409,7 +407,7 @@
       signBtn.onclick     = null;
 
       showStatus('success',
-        '✅ Dark Coin sent on-chain!<br><br>' +
+        '✅ ALGO sent on-chain!<br><br>' +
         'Return to Discord and tap <strong>✅ I\'ve Sent It</strong> — ' +
         'the bot will verify and send your GOLD automatically.'
       );
